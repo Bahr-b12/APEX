@@ -169,7 +169,7 @@ export default function App() {
         {/* ── NAV ── */}
         <motion.header className="relative z-50" variants={slideDown} initial="hidden" animate="show">
           <nav className="flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 md:py-6">
-            <motion.a href="#" className="text-xl md:text-2xl font-semibold tracking-tight"
+            <motion.a href="#" className="font-primary text-xl md:text-2xl font-semibold tracking-tight"
               whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.97 }}>
               APEX
             </motion.a>
@@ -245,7 +245,7 @@ export default function App() {
             
             {/* Headline */}
             <motion.h1 variants={fadeUp}
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.1] font-bold tracking-tight mb-6">
+              className="font-primary text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.1] font-bold tracking-tight mb-6">
               Spend Smarter. Grow Faster.
             </motion.h1>
             
@@ -276,7 +276,7 @@ export default function App() {
           initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl p-6 md:p-8">
-            <motion.h2 className="text-3xl md:text-4xl mb-6"
+            <motion.h2 className="font-primary text-3xl md:text-4xl mb-6"
               initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.55 }}>
               Advanced Analytics
@@ -340,7 +340,7 @@ export default function App() {
           viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl overflow-hidden">
             <div className="p-6 md:p-8 border-b border-white/10">
-              <motion.h3 className="text-2xl md:text-3xl"
+              <motion.h3 className="font-primary text-2xl md:text-3xl"
                 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.5 }}>
                 APEX AI Analyst
@@ -461,7 +461,7 @@ export default function App() {
           initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl p-6 md:p-8">
-            <motion.h2 className="text-3xl md:text-4xl mb-6">Actionable Insights</motion.h2>
+            <motion.h2 className="font-primary text-3xl md:text-4xl mb-6">Actionable Insights</motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Panel title="Spending Patterns">
                 <p className="text-gray-400">Your weekend dining expenses have increased by 15% compared to last month. Consider exploring local grocery options.</p>
@@ -481,10 +481,10 @@ export default function App() {
           initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl p-6 md:p-8">
-            <motion.h2 className="text-3xl md:text-4xl mb-6">Smart Budgeting</motion.h2>
+            <motion.h2 className="font-primary text-3xl md:text-4xl mb-6">Smart Budgeting</motion.h2>
 
             <div className="mb-8 bg-black/40 border border-white/10 rounded-xl p-6">
-              <h3 className="text-xl mb-4 font-medium text-white/90">Let APEX AI Build Your Plan</h3>
+              <h3 className="font-primary text-xl mb-4 font-medium text-white/90">Let APEX AI Build Your Plan</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                 <div>
                   <label className="block text-sm text-gray-400 mb-2">Monthly Budget ($)</label>
@@ -546,7 +546,7 @@ export default function App() {
           initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl p-6 md:p-8">
-            <motion.h2 className="text-3xl md:text-4xl mb-6">Financial Reports</motion.h2>
+            <motion.h2 className="font-primary text-3xl md:text-4xl mb-6">Financial Reports</motion.h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { name: "2025 Annual Review", date: "Jan 1, 2026" },
@@ -580,7 +580,7 @@ export default function App() {
 
               {/* Brand & Mission */}
               <div className="md:col-span-2">
-                <motion.h3 className="text-3xl font-bold tracking-tighter text-white mb-4 flex items-center gap-2"
+                <motion.h3 className="font-primary text-3xl font-bold tracking-tighter text-white mb-4 flex items-center gap-2"
                   whileHover={{ scale: 1.02 }}
                 >
                   APEX <span className="text-cyan-400">Finance</span>
@@ -683,7 +683,7 @@ function Panel({ title, children, wide }) {
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
       whileHover={{ scale: 1.01, borderColor: "rgba(255,255,255,0.18)" }}>
-      <h3 className="text-xl mb-3">{title}</h3>
+      <h3 className="font-primary text-xl mb-3">{title}</h3>
       {children}
     </motion.div>
   );
