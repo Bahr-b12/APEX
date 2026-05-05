@@ -227,7 +227,7 @@ export default function App() {
         </motion.header>
 
         {/* ── HERO ── */}
-        <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-12 pt-20">
+        <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-12 pb-20">
           <motion.div className="flex flex-col items-center max-w-4xl mx-auto" variants={stagger(0.35)} initial="hidden" animate="show">
             {/* Badges */}
             <motion.div variants={fadeUp} className="inline-flex flex-wrap justify-center items-center gap-4 sm:gap-6 mb-8 text-xs sm:text-sm liquid-glass px-6 py-3 rounded-full border border-white/10">
