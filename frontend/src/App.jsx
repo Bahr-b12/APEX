@@ -158,9 +158,9 @@ export default function App() {
         transition={{ duration: 2, ease: "easeOut" }}
         style={{ filter: videoBlur }}
       />
-      <motion.div 
-        className="fixed inset-0 z-[1] pointer-events-none bg-black" 
-        style={{ opacity: maskOpacity }} 
+      <motion.div
+        className="fixed inset-0 z-[1] pointer-events-none bg-black"
+        style={{ opacity: maskOpacity }}
       />
       <div className="fixed inset-0 z-[1] pointer-events-none bottom-blur-mask" />
 
@@ -227,60 +227,48 @@ export default function App() {
         </motion.header>
 
         {/* ── HERO ── */}
-        <section className="min-h-screen flex flex-col justify-end px-4 sm:px-6 md:px-12 pb-8 md:pb-16">
-          <div className="flex flex-col md:flex-row items-end gap-8">
-            <motion.div className="flex-1" variants={stagger(0.35)} initial="hidden" animate="show">
-              {/* Badges */}
-              <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3 sm:gap-6 mb-6 md:mb-8 text-xs sm:text-sm">
-                {[
-                  [<Star key="s" size={16} fill="white" />, "AI-Powered Insights"],
-                  [<Clock3 key="c" size={16} />, "Real-Time Data"],
-                  [<Calendar key="cal" size={16} />, "Since 2022"],
-                ].map(([icon, label], i) => (
-                  <motion.span key={label} className="flex items-center gap-2"
-                    whileHover={{ scale: 1.05, color: "#fff" }}>
-                    {icon} {label}
-                  </motion.span>
-                ))}
-              </motion.div>
-              {/* Headline */}
-              <motion.h1 variants={fadeUp}
-                className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-[-0.04em] mb-4 md:mb-6">
-                Spend Smarter. Grow Faster.
-              </motion.h1>
-              {/* Subtitle */}
-              <motion.p variants={fadeUp}
-                className="text-base sm:text-lg md:text-xl text-gray-400 mb-6 md:mb-12 max-w-2xl">
-                APEX is your AI-powered finance manager — tracking every transaction, surfacing patterns, and giving you clear answers in plain language.
-              </motion.p>
-              {/* CTAs */}
-              <motion.div variants={fadeUp} className="flex flex-wrap gap-3 sm:gap-4">
-                <motion.a href="#dashboard"
-                  className="bg-white text-black rounded-full font-medium px-6 sm:px-8 py-2.5 sm:py-3 inline-flex items-center gap-2"
-                  whileHover={{ scale: 1.04, backgroundColor: "#e5e5e5" }} whileTap={{ scale: 0.97 }}>
-                  <Play size={18} fill="black" /> View Dashboard
-                </motion.a>
-                <motion.a href="#ai-chat"
-                  className="rounded-full font-medium liquid-glass px-6 sm:px-8 py-2.5 sm:py-3"
-                  whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                  Ask APEX AI
-                </motion.a>
-              </motion.div>
+        <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 md:px-12 pt-20">
+          <motion.div className="flex flex-col items-center max-w-4xl mx-auto" variants={stagger(0.35)} initial="hidden" animate="show">
+            {/* Badges */}
+            <motion.div variants={fadeUp} className="inline-flex flex-wrap justify-center items-center gap-4 sm:gap-6 mb-8 text-xs sm:text-sm liquid-glass px-6 py-3 rounded-full border border-white/10">
+              {[
+                [<Star key="s" size={16} fill="white" />, "AI-Powered Insights"],
+                [<Clock3 key="c" size={16} />, "Real-Time Data"],
+                [<Calendar key="cal" size={16} />, "Since 2022"],
+              ].map(([icon, label], i) => (
+                <motion.span key={label} className="flex items-center gap-2 whitespace-nowrap"
+                  whileHover={{ scale: 1.05, color: "#22d3ee" }}>
+                  {icon} {label}
+                </motion.span>
+              ))}
             </motion.div>
-            {/* Prev / Next */}
-            <motion.div className="flex gap-3 md:w-auto"
-              initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1, duration: 0.6, ease: "easeOut" }}>
-              <motion.button whileHover={{ scale: 1.05, x: -3 }} whileTap={{ scale: 0.95 }}
-                className="rounded-full liquid-glass px-4 sm:px-6 py-2.5 sm:py-3 inline-flex items-center gap-2">
-                <ChevronLeft size={18} /> Previous
-              </motion.button>
-              <motion.button whileHover={{ scale: 1.05, x: 3 }} whileTap={{ scale: 0.95 }}
-                className="rounded-full liquid-glass px-4 sm:px-6 py-2.5 sm:py-3 inline-flex items-center gap-2">
-                Next <ChevronRight size={18} />
-              </motion.button>
+            
+            {/* Headline */}
+            <motion.h1 variants={fadeUp}
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.1] font-bold tracking-tight mb-6">
+              Spend Smarter. Grow Faster.
+            </motion.h1>
+            
+            {/* Subtitle */}
+            <motion.p variants={fadeUp}
+              className="text-lg sm:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+              APEX is your AI-powered finance manager — tracking every transaction, surfacing patterns, and giving you clear answers in plain language.
+            </motion.p>
+            
+            {/* CTAs */}
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row justify-center items-center gap-4">
+              <motion.a href="#dashboard"
+                className="bg-white text-black rounded-full font-medium px-8 py-3.5 inline-flex items-center gap-2"
+                whileHover={{ scale: 1.04, backgroundColor: "#e5e5e5" }} whileTap={{ scale: 0.97 }}>
+                <Play size={18} fill="black" /> View Dashboard
+              </motion.a>
+              <motion.a href="#ai-chat"
+                className="rounded-full font-medium liquid-glass border border-white/15 bg-white/5 px-8 py-3.5"
+                whileHover={{ scale: 1.04, backgroundColor: "rgba(255,255,255,0.1)" }} whileTap={{ scale: 0.97 }}>
+                Ask APEX AI
+              </motion.a>
             </motion.div>
-          </div>
+          </motion.div>
         </section>
 
         {/* ── DASHBOARD ── */}
@@ -328,14 +316,14 @@ export default function App() {
               <Panel title="Trend + Category Overlay" wide>{trendOverlaySeries.length ? <Line data={trendOverlaySeries} xField="month" yField="value" seriesField="series" smooth color={["#ff4533", "#22d3ee"]} theme={plotTheme} height={320} /> : <p className="text-gray-400">No data.</p>}</Panel>
               <Panel title="Category Strength Radar" wide>
                 {radarData.length ? (
-                  <Radar 
-                    data={radarData} 
-                    xField="item" 
-                    yField="score" 
-                    area={{ style: { fillOpacity: 0.25, fill: "#22d3ee" } }} 
+                  <Radar
+                    data={radarData}
+                    xField="item"
+                    yField="score"
+                    area={{ style: { fillOpacity: 0.25, fill: "#22d3ee" } }}
                     line={{ style: { stroke: "#22d3ee", lineWidth: 2 } }}
                     point={{ shapeField: "circle", size: 4, style: { fill: "#22d3ee", stroke: "#000", lineWidth: 1.5 } }}
-                    theme={plotTheme} 
+                    theme={plotTheme}
                   />
                 ) : (
                   <p className="text-gray-400">No data.</p>
@@ -578,7 +566,7 @@ export default function App() {
         </motion.section>
 
         {/* ── HIGH-END FOOTER ── */}
-        <motion.footer 
+        <motion.footer
           className="relative border-t border-white/5 bg-black/60 backdrop-blur-2xl mt-24 pt-16 pb-8 overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -589,7 +577,7 @@ export default function App() {
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-              
+
               {/* Brand & Mission */}
               <div className="md:col-span-2">
                 <motion.h3 className="text-3xl font-bold tracking-tighter text-white mb-4 flex items-center gap-2"
@@ -598,10 +586,10 @@ export default function App() {
                   APEX <span className="text-cyan-400">Finance</span>
                 </motion.h3>
                 <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-8">
-                  Redefining personal wealth management through AI-driven insights, 
+                  Redefining personal wealth management through AI-driven insights,
                   secure analytics, and cinematic data visualization.
                 </p>
-                
+
                 {/* Interactive Socials */}
                 <div className="flex items-center gap-4">
                   {[
@@ -609,7 +597,7 @@ export default function App() {
                     { name: "Instagram", href: "https://www.instagram.com/bahr_behairy/", icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg> },
                     { name: "Email", href: "mailto:abdallahbbehairy@gmail.com", icon: <Mail size={18} /> }
                   ].map((social) => (
-                    <motion.a 
+                    <motion.a
                       key={social.name}
                       href={social.href} target="_blank" rel="noopener noreferrer"
                       whileHover={{ y: -4, scale: 1.1, backgroundColor: "rgba(34, 211, 238, 0.1)", color: "#22d3ee", borderColor: "rgba(34, 211, 238, 0.4)" }}
@@ -660,7 +648,7 @@ export default function App() {
                   </li>
                 </ul>
               </div>
-              
+
             </div>
 
             {/* Bottom Bar */}
