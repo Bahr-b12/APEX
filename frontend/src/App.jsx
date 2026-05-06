@@ -3,12 +3,15 @@ import { Area, Column, Line, Pie, Radar, Scatter } from "@ant-design/plots";
 import { Calendar, ChevronLeft, ChevronRight, Clock3, Menu, Play, Search, Star, User, X, Mail } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 
-// ── Shared animation variants ──────────────────────────────────────────────
+ // ── Shared animation variants ──────────────────────────────────────────────
 const fadeUp = { hidden: { opacity: 0, y: 32, filter: "blur(8px)" }, show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.75, ease: [0.25, 0.46, 0.45, 0.94] } } };
 const stagger = (delay = 0) => ({ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: delay } } });
 const slideDown = { hidden: { opacity: 0, y: -24, filter: "blur(6px)" }, show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: "easeOut" } } };
 const scaleIn = { hidden: { opacity: 0, scale: 0.88 }, show: { opacity: 1, scale: 1, transition: { duration: 0.55, ease: [0.34, 1.56, 0.64, 1] } } };
 const VIDEO_URL = "/233320_tiny.mp4";
+
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:4000").replace(/\/$/, "");
+const apiUrl = (path) => `${API_BASE_URL}${String(path || "").startsWith("/") ? "" : "/"}${path}`;
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -38,8 +41,8 @@ export default function App() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:4000/analytics/monthly").then((r) => r.json()).then((d) => setMonthly(Array.isArray(d) ? d : [])).catch(() => { setMonthly([]); setApiError("Could not load monthly analytics."); });
-    fetch("http://localhost:4000/analytics/category").then((r) => r.json()).then((d) => setCategory(Array.isArray(d) ? d : [])).catch(() => { setCategory([]); setApiError("Could not load category analytics."); });
+    fetch(apiUrl("/analytics/monthly")).then((r) => r.json()).then((d) => setMonthly(Array.isArray(d) ? d : [])).catch(() => { setMonthly([]); setApiError("Could not load monthly analytics."); });
+    fetch(apiUrl("/analytics/category")).then((r) => r.json()).then((d) => setCategory(Array.isArray(d) ? d : [])).catch(() => { setCategory([]); setApiError("Could not load category analytics."); });
   }, []);
 
   // Framer Motion handles scroll animations — IntersectionObserver not needed
@@ -95,7 +98,7 @@ export default function App() {
     const askedAt = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     setChatInput("");
     try {
-      const res = await fetch("http://localhost:4000/ai-query", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q }) });
+      const res = await fetch(apiUrl("/ai-query"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "AI request failed");
       setChat((p) => [...p, { q, a: data.answer || data.narrative || "No response", narrative: data.narrative || "", sql: data.sql || "", rows: data.rowCount ?? 0, askedAt }]);
@@ -111,7 +114,7 @@ export default function App() {
     if (!msg?.sql) return;
     setChat((p) => p.map((m, i) => (i === index ? { ...m, sqlRunning: true, sqlError: "", sqlResult: null } : m)));
     try {
-      const res = await fetch("http://localhost:4000/ai-sql-exec", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sql: msg.sql }) });
+      const res = await fetch(apiUrl("/ai-sql-exec"), { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ sql: msg.sql }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "SQL execution failed");
       setChat((p) => p.map((m, i) => (i === index ? { ...m, sqlRunning: false, sqlResult: { rowCount: data.rowCount || 0, rows: Array.isArray(data.rows) ? data.rows.slice(0, 10) : [] }, sqlError: "" } : m)));
@@ -128,7 +131,7 @@ export default function App() {
     setBudgetError("");
     setGeneratingBudget(true);
     try {
-      const res = await fetch("http://localhost:4000/ai-budget-plan", {
+      const res = await fetch(apiUrl("/ai-budget-plan"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ budget: budgetAmount, goal: budgetGoal })
@@ -169,7 +172,7 @@ export default function App() {
         {/* ── NAV ── */}
         <motion.header className="relative z-50" variants={slideDown} initial="hidden" animate="show">
           <nav className="flex justify-between items-center px-4 sm:px-6 md:px-12 py-4 md:py-6">
-            <motion.a href="#" className="font-primary text-xl md:text-2xl font-semibold tracking-tight"
+            <motion.a href="#" className="text-xl md:text-2xl font-semibold tracking-tight"
               whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.97 }}>
               APEX
             </motion.a>
@@ -245,7 +248,7 @@ export default function App() {
             
             {/* Headline */}
             <motion.h1 variants={fadeUp}
-              className="font-primary text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.1] font-bold tracking-tight mb-6">
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.1] font-bold tracking-tight mb-6">
               Spend Smarter. Grow Faster.
             </motion.h1>
             
@@ -276,7 +279,7 @@ export default function App() {
           initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl p-6 md:p-8">
-            <motion.h2 className="font-primary text-3xl md:text-4xl mb-6"
+            <motion.h2 className="text-3xl md:text-4xl mb-6"
               initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.55 }}>
               Advanced Analytics
@@ -340,7 +343,7 @@ export default function App() {
           viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl overflow-hidden">
             <div className="p-6 md:p-8 border-b border-white/10">
-              <motion.h3 className="font-primary text-2xl md:text-3xl"
+              <motion.h3 className="text-2xl md:text-3xl"
                 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }} transition={{ duration: 0.5 }}>
                 APEX AI Analyst
@@ -461,7 +464,7 @@ export default function App() {
           initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl p-6 md:p-8">
-            <motion.h2 className="font-primary text-3xl md:text-4xl mb-6">Actionable Insights</motion.h2>
+            <motion.h2 className="text-3xl md:text-4xl mb-6">Actionable Insights</motion.h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Panel title="Spending Patterns">
                 <p className="text-gray-400">Your weekend dining expenses have increased by 15% compared to last month. Consider exploring local grocery options.</p>
@@ -481,10 +484,10 @@ export default function App() {
           initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl p-6 md:p-8">
-            <motion.h2 className="font-primary text-3xl md:text-4xl mb-6">Smart Budgeting</motion.h2>
+            <motion.h2 className="text-3xl md:text-4xl mb-6">Smart Budgeting</motion.h2>
 
             <div className="mb-8 bg-black/40 border border-white/10 rounded-xl p-6">
-              <h3 className="font-primary text-xl mb-4 font-medium text-white/90">Let APEX AI Build Your Plan</h3>
+              <h3 className="text-xl mb-4 font-medium text-white/90">Let APEX AI Build Your Plan</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                 <div>
                   <label className="block text-sm text-gray-400 mb-2">Monthly Budget ($)</label>
@@ -546,7 +549,7 @@ export default function App() {
           initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.08 }} transition={{ duration: 0.7, ease: "easeOut" }}>
           <div className="liquid-glass rounded-2xl p-6 md:p-8">
-            <motion.h2 className="font-primary text-3xl md:text-4xl mb-6">Financial Reports</motion.h2>
+            <motion.h2 className="text-3xl md:text-4xl mb-6">Financial Reports</motion.h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 { name: "2025 Annual Review", date: "Jan 1, 2026" },
@@ -580,7 +583,7 @@ export default function App() {
 
               {/* Brand & Mission */}
               <div className="md:col-span-2">
-                <motion.h3 className="font-primary text-3xl font-bold tracking-tighter text-white mb-4 flex items-center gap-2"
+                <motion.h3 className="text-3xl font-bold tracking-tighter text-white mb-4 flex items-center gap-2"
                   whileHover={{ scale: 1.02 }}
                 >
                   APEX <span className="text-cyan-400">Finance</span>
@@ -683,7 +686,7 @@ function Panel({ title, children, wide }) {
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
       whileHover={{ scale: 1.01, borderColor: "rgba(255,255,255,0.18)" }}>
-      <h3 className="font-primary text-xl mb-3">{title}</h3>
+      <h3 className="text-xl mb-3">{title}</h3>
       {children}
     </motion.div>
   );

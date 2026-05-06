@@ -13,8 +13,8 @@ export default {
         "border-primary": "rgba(255, 255, 255, 0.1)"
       },
       fontFamily: {
-        primary: ["Syne", "sans-serif"],
-        secondary: ["Outfit", "sans-serif"]
+        primary: ["Instrument Serif", "serif"],
+        secondary: ["Inter", "sans-serif"]
       },
       keyframes: {
         spin: {
